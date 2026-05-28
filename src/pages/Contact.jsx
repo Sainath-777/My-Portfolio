@@ -139,6 +139,7 @@ const Contact = () => {
               </motion.div>
             ) : (
               <form name="contact" data-netlify="true" onSubmit={handleSubmit} className="space-y-5">
+                <input type="hidden" name="form-name" value="contact" />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div className="space-y-1.5">
                     <label className="text-[11px] font-mono text-textMuted tracking-widest uppercase">Name</label>
