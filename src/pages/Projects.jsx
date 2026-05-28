@@ -31,7 +31,7 @@ const Projects = () => {
   );
 
   return (
-    <div className="w-full pb-24 pt-8 px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto">
+    <div className="w-full pb-12 pt-8 px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}

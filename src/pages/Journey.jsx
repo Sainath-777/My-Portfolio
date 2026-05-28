@@ -79,14 +79,14 @@ const TimelineItem = ({ milestone, index, isLast }) => {
 
 const Journey = () => {
   return (
-    <div className="w-full pb-24 pt-8 px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto">
+    <div className="w-full pb-12 pt-8 px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto">
 
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="mb-16"
+        className="mb-10"
       >
         <p className="text-xs font-mono text-primary tracking-[0.2em] uppercase mb-3">Journey</p>
         <h1 className="text-4xl md:text-5xl font-heading font-bold text-textPrimary leading-tight">

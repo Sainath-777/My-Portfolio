@@ -64,11 +64,14 @@ const Background3D = () => {
   }, []);
 
   return (
-    <div className="fixed inset-0 z-[-1] pointer-events-none">
+    <div
+      style={{ position: 'fixed', inset: 0, zIndex: -1, pointerEvents: 'none', overflow: 'hidden', width: '100%', height: '100%' }}
+    >
       <Canvas
         camera={{ position: [0, 0, 5], fov: 60 }}
         gl={{ antialias: false, alpha: true }}
         dpr={Math.min(window.devicePixelRatio, 1.5)}
+        style={{ display: 'block', width: '100%', height: '100%' }}
       >
         <ParticleField mouseRef={mouseRef} />
       </Canvas>

@@ -82,7 +82,7 @@ const skills = [
 
 // ─── Animated section header ────────────────────────────────────────────────
 const SectionHeader = ({ tag, title, subtitle }) => (
-  <div className="mb-12">
+  <div className="mb-8">
     <p className="text-xs font-mono text-primary tracking-[0.2em] uppercase mb-3">{tag}</p>
     <h2 className="text-3xl md:text-4xl font-heading font-bold text-textPrimary leading-tight">{title}</h2>
     {subtitle && <p className="text-textMuted font-body mt-3 max-w-xl">{subtitle}</p>}
@@ -117,7 +117,7 @@ const Home = () => {
     <div className="w-full">
 
       {/* ── HERO ─────────────────────────────────────────────────────────────── */}
-      <section className="min-h-[calc(100vh-80px)] flex items-center py-10 px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto">
+      <section className="min-h-[calc(100vh-80px)] flex items-center py-8 px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 w-full items-center">
 
           {/* Left */}
@@ -208,7 +208,7 @@ const Home = () => {
       {/* ── ABOUT ────────────────────────────────────────────────────────────── */}
       <section
         ref={aboutRef}
-        className="py-24 px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto border-t border-borderColor/20"
+        className="py-14 px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto border-t border-borderColor/20"
       >
         <motion.div
           variants={containerVariants}
@@ -223,7 +223,7 @@ const Home = () => {
             />
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
             {/* Bio */}
             <motion.div variants={itemVariants} className="space-y-5 font-body text-textMuted leading-relaxed">
               <p>
@@ -264,7 +264,7 @@ const Home = () => {
       {/* ── TECH STACK ───────────────────────────────────────────────────────── */}
       <section
         ref={skillsRef}
-        className="py-24 px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto border-t border-borderColor/20"
+        className="py-14 px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto border-t border-borderColor/20"
       >
         <motion.div
           variants={containerVariants}
@@ -303,7 +303,7 @@ const Home = () => {
       </section>
 
       {/* ── FEATURED PROJECTS PREVIEW ─────────────────────────────────────────── */}
-      <section className="py-24 px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto border-t border-borderColor/20">
+      <section className="py-14 px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto border-t border-borderColor/20">
         <div className="flex items-end justify-between mb-12">
           <SectionHeader tag="Projects" title="Featured Work" />
           <Link
