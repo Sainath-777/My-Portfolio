@@ -36,7 +36,7 @@ const Footer = () => {
             className="w-10 h-10 rounded-full bg-cardBg border border-borderColor flex items-center justify-center text-textMuted hover:text-primary hover:border-primary/50 transition-colors" aria-label="LinkedIn">
             <FaLinkedin size={18} />
           </a>
-          <a href="mailto:sainath2126@gmail.com"
+          <a href="mailto:sainathreddy2126@gmail.com"
             className="w-10 h-10 rounded-full bg-cardBg border border-borderColor flex items-center justify-center text-textMuted hover:text-primary hover:border-primary/50 transition-colors" aria-label="Email">
             <Mail size={18} />
           </a>

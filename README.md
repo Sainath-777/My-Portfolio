@@ -87,6 +87,6 @@ To activate the deployment on your GitHub repository:
 ## 👨‍💻 Author
 
 **Sainath Reddy G**
-- **Email**: sainath2126@gmail.com
+- **Email**: sainathreddy2126@gmail.com
 - **LinkedIn**: [Sainath Reddy G](https://www.linkedin.com/in/sainath-reddy-g-3263b324b/)
 - **GitHub**: [@Sainath-777](https://github.com/Sainath-777)
