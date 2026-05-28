@@ -40,9 +40,24 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Placeholder — wire to a real backend/Formspree later
-    setSent(true);
-    setTimeout(() => setSent(false), 4000);
+    
+    const formData = new FormData();
+    formData.append('form-name', 'contact');
+    formData.append('name', form.name);
+    formData.append('email', form.email);
+    formData.append('message', form.message);
+
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(formData).toString(),
+    })
+      .then(() => {
+        setSent(true);
+        setForm({ name: '', email: '', message: '' });
+        setTimeout(() => setSent(false), 4000);
+      })
+      .catch((error) => alert('Error sending message: ' + error));
   };
 
   return (
@@ -123,7 +138,7 @@ const Contact = () => {
                 <p className="text-textMuted font-body text-sm">I'll get back to you shortly.</p>
               </motion.div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form name="contact" data-netlify="true" onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div className="space-y-1.5">
                     <label className="text-[11px] font-mono text-textMuted tracking-widest uppercase">Name</label>
