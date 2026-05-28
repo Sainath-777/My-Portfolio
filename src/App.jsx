@@ -12,8 +12,11 @@ function App() {
     document.documentElement.classList.add('dark');
   }, []);
 
+  const rawBase = import.meta.env.BASE_URL;
+  const basename = rawBase === '/' ? undefined : rawBase.replace(/\/$/, '');
+
   return (
-    <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '')}>
+    <BrowserRouter basename={basename}>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
