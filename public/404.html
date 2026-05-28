@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Redirecting...</title>
+    <script type="text/javascript">
+      // Save the original URL in session storage
+      sessionStorage.redirect = window.location.href;
+      // Extract the repository name from the path if on github.io (e.g. "/My-Portfolio/projects" -> "My-Portfolio")
+      var isGithubIO = window.location.hostname.endsWith('github.io');
+      var repoName = isGithubIO ? window.location.pathname.split('/')[1] : '';
+      window.location.replace('/' + (repoName ? repoName + '/' : ''));
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
