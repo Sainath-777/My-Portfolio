@@ -120,7 +120,7 @@ const StatCard = ({ value, label }) => (
 );
 
 // ─── Main Component ───────────────────────────────────────────────────────────
-const ROLES = ['AI Engineer', 'ML Engineer', 'AIML Engineer', 'Python Developer'];
+const ROLES = ['AI Engineer', 'AIML Engineer'];
 
 const Home = () => {
   const aboutRef = useRef(null);
@@ -360,14 +360,14 @@ const Home = () => {
               tag: 'Multi-tenant RAG SaaS API',
               desc: 'Production-grade RAG SaaS with 3-stage hybrid retrieval (BM25 + Semantic + Cohere Rerank), achieving sub-400ms latency and semantic Redis caching.',
               stack: ['FastAPI', 'Pinecone', 'Redis', 'Celery', 'Gemini', 'Cohere'],
-              status: 'Completed',
+              status: 'Deployed',
             },
             {
               title: 'Doc2U — AI Healthcare Platform',
               tag: 'MSME Funded · ₹9 Lakhs · Team Lead',
               desc: 'Live teleconsultation platform with AI-driven triage, 25+ REST APIs, JWT multi-role auth, and appointment management — serving real doctors and patients.',
               stack: ['FastAPI', 'PostgreSQL', 'Next.js', 'SQLAlchemy', 'JWT'],
-              status: 'Completed',
+              status: 'Deployed',
             },
           ].map((p, i) => (
             <motion.div

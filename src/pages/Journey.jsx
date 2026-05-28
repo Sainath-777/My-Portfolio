@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const milestones = [
   {
-    year: '2020',
+    year: '2021',
     title: 'Started B.Tech — AI & ML',
     desc: 'Enrolled in B.Tech Artificial Intelligence & Machine Learning at IFET College of Engineering, Villupuram, Tamil Nadu. Began with Python fundamentals and data structures.',
     color: 'text-blue-400',

@@ -99,7 +99,7 @@ const Projects = () => {
                     ? 'bg-amber-500/10 text-amber-400 border-amber-500/20'
                     : 'bg-green-500/10 text-green-400 border-green-500/20'
                 }`}>
-                  {project.status.includes('Development') ? '🔧 In Dev' : '✓ Completed'}
+                  {project.status.includes('Development') ? '🔧 In Dev' : '🚀 Deployed'}
                 </div>
               </div>
 
