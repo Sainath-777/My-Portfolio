@@ -28,7 +28,7 @@ const contactLinks = [
   {
     icon: MapPin,
     label: 'Location',
-    value: 'Tamil Nadu, India',
+    value: 'Hyderabad, India',
     href: null,
     hint: null,
   },
@@ -114,8 +114,8 @@ const Contact = () => {
               <span className="text-xs font-mono text-green-400 tracking-widest">Available for hire</span>
             </div>
             <p className="text-sm text-textMuted font-body leading-relaxed">
-              Currently open to full-time AI/ML Engineer, Backend Engineer, and Python Developer roles.
-              Remote-friendly.
+              Currently open to full-time <span className="text-textPrimary">AI Engineer, ML Engineer, AIML Engineer,</span> and <span className="text-textPrimary">Python Developer</span> roles.
+              Remote-friendly · Open to relocate.
             </p>
           </div>
         </motion.div>

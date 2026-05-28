@@ -1,35 +1,57 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useInView } from 'framer-motion';
 import { Download, Mail, ArrowRight, ExternalLink } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 
-// ─── Hero Avatar with animated rings ───────────────────────────────────────
+// ─── Typing Effect Hook ──────────────────────────────────────────────────────
+const useTypingEffect = (roles, speed = 90, pause = 1800) => {
+  const [display, setDisplay] = useState('');
+  const [roleIdx, setRoleIdx] = useState(0);
+  const [charIdx, setCharIdx] = useState(0);
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    const current = roles[roleIdx];
+    let timer;
+    if (!deleting && charIdx < current.length) {
+      timer = setTimeout(() => setCharIdx(c => c + 1), speed);
+    } else if (!deleting && charIdx === current.length) {
+      timer = setTimeout(() => setDeleting(true), pause);
+    } else if (deleting && charIdx > 0) {
+      timer = setTimeout(() => setCharIdx(c => c - 1), speed / 2);
+    } else if (deleting && charIdx === 0) {
+      setDeleting(false);
+      setRoleIdx(r => (r + 1) % roles.length);
+    }
+    setDisplay(current.slice(0, charIdx));
+    return () => clearTimeout(timer);
+  }, [charIdx, deleting, roleIdx, roles, speed, pause]);
+
+  return display;
+};
+
+// ─── Hero Avatar ─────────────────────────────────────────────────────────────
 const HeroAvatar = () => (
   <div className="relative w-64 h-64 sm:w-80 sm:h-80 mx-auto flex items-center justify-center">
-    {/* Outer rotating dashed ring */}
     <div
       className="absolute inset-0 rounded-full border border-dashed border-primary/30 rotate-slow"
       style={{ margin: '-16px' }}
     />
-    {/* Inner counter-rotating ring */}
     <div
       className="absolute inset-0 rounded-full border border-primary/20 rotate-reverse"
       style={{ margin: '-8px' }}
     />
-    {/* Main avatar circle */}
     <div className="relative w-full h-full rounded-full glow-pulse overflow-hidden flex items-center justify-center"
       style={{
         background: 'linear-gradient(135deg, #13132B 0%, #1A1A3E 100%)',
         border: '2px solid rgba(124,115,245,0.5)',
       }}
     >
-      {/* Initials placeholder — swap with <img src="..." /> for real photo */}
       <div className="text-center select-none">
         <div className="text-6xl sm:text-7xl font-heading font-bold gradient-text leading-none">SR</div>
-        <div className="text-xs font-mono text-textMuted mt-2 tracking-widest uppercase">Sainath Reddy G</div>
+        <div className="text-xs font-mono text-textMuted mt-2 tracking-widest uppercase">Gayam Sainath Reddy</div>
       </div>
-      {/* Subtle inner glow */}
       <div className="absolute inset-0 rounded-full"
         style={{ background: 'radial-gradient(ellipse at center, rgba(124,115,245,0.12) 0%, transparent 70%)' }}
       />
@@ -60,27 +82,27 @@ const HeroAvatar = () => (
   </div>
 );
 
-// ─── Skill data with devicons (real colored SVGs from CDN) ──────────────────
+// ─── Skills (from resume) ─────────────────────────────────────────────────────
 const skills = [
-  { name: 'Python',      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
-  { name: 'TensorFlow',  icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg' },
-  { name: 'OpenCV',      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg' },
-  { name: 'Flask',       icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg' },
-  { name: 'FastAPI',     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg' },
-  { name: 'LangChain',   icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
-  { name: 'PostgreSQL',  icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg' },
-  { name: 'MySQL',       icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg' },
-  { name: 'Scikit-learn',icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/scikitlearn/scikitlearn-original.svg' },
-  { name: 'NumPy',       icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg' },
-  { name: 'Pandas',      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg' },
-  { name: 'Docker',      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg' },
-  { name: 'Git',         icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg' },
-  { name: 'Next.js',     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg' },
-  { name: 'Streamlit',   icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/streamlit/streamlit-original.svg' },
-  { name: 'HuggingFace', icon: 'https://huggingface.co/front/assets/huggingface_logo-noborder.svg' },
+  { name: 'Python',       icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
+  { name: 'FastAPI',      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg' },
+  { name: 'LangChain',    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
+  { name: 'TensorFlow',   icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg' },
+  { name: 'OpenCV',       icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg' },
+  { name: 'PostgreSQL',   icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg' },
+  { name: 'Redis',        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg' },
+  { name: 'Next.js',      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg' },
+  { name: 'React',        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
+  { name: 'Docker',       icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg' },
+  { name: 'Pinecone',     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
+  { name: 'HuggingFace',  icon: 'https://huggingface.co/front/assets/huggingface_logo-noborder.svg' },
+  { name: 'Scikit-learn', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/scikitlearn/scikitlearn-original.svg' },
+  { name: 'MongoDB',      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg' },
+  { name: 'Flask',        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg' },
+  { name: 'Git',          icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg' },
 ];
 
-// ─── Animated section header ────────────────────────────────────────────────
+// ─── Animated section header ──────────────────────────────────────────────────
 const SectionHeader = ({ tag, title, subtitle }) => (
   <div className="mb-8">
     <p className="text-xs font-mono text-primary tracking-[0.2em] uppercase mb-3">{tag}</p>
@@ -89,7 +111,7 @@ const SectionHeader = ({ tag, title, subtitle }) => (
   </div>
 );
 
-// ─── Stat Card ──────────────────────────────────────────────────────────────
+// ─── Stat Card ────────────────────────────────────────────────────────────────
 const StatCard = ({ value, label }) => (
   <div className="bg-cardBg border border-borderColor rounded-xl p-5 text-center hover:border-primary/40 transition-colors">
     <div className="text-2xl font-heading font-bold gradient-text">{value}</div>
@@ -97,12 +119,15 @@ const StatCard = ({ value, label }) => (
   </div>
 );
 
-// ─── Main Component ─────────────────────────────────────────────────────────
+// ─── Main Component ───────────────────────────────────────────────────────────
+const ROLES = ['AI Engineer', 'ML Engineer', 'AIML Engineer', 'Python Developer'];
+
 const Home = () => {
   const aboutRef = useRef(null);
   const skillsRef = useRef(null);
   const aboutInView = useInView(aboutRef, { once: true, margin: '-80px' });
   const skillsInView = useInView(skillsRef, { once: true, margin: '-80px' });
+  const typedRole = useTypingEffect(ROLES);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -144,14 +169,16 @@ const Home = () => {
               >
                 Sainath Reddy
               </motion.h1>
-              <motion.p
-                className="text-xl md:text-2xl font-heading font-semibold gradient-text"
+              {/* Typing Effect Role */}
+              <motion.div
+                className="text-xl md:text-2xl font-heading font-semibold gradient-text h-8 flex items-center justify-center lg:justify-start"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.35 }}
               >
-                AI/ML Developer | Python · FastAPI · LangChain · OpenCV
-              </motion.p>
+                <span>{typedRole}</span>
+                <span className="ml-0.5 inline-block w-0.5 h-6 bg-primary animate-pulse" />
+              </motion.div>
             </div>
 
             <motion.p
@@ -160,7 +187,8 @@ const Home = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
             >
-              Building intelligent backend systems — RAG pipelines, REST APIs, and computer vision tools.
+              Team Lead of an MSME-funded live healthcare platform. Building and deploying production-grade AI systems —
+              RAG pipelines, LLM agents, and scalable Python backends.
             </motion.p>
 
             <motion.div
@@ -219,7 +247,7 @@ const Home = () => {
             <SectionHeader
               tag="About Me"
               title="Who I Am"
-              subtitle="A CS student from Tamil Nadu building intelligent systems that solve real problems."
+              subtitle="I don't just study AI — I ship it to production."
             />
           </motion.div>
 
@@ -227,23 +255,31 @@ const Home = () => {
             {/* Bio */}
             <motion.div variants={itemVariants} className="space-y-5 font-body text-textMuted leading-relaxed">
               <p>
-                I'm a Computer Science student from Tamil Nadu specialising in <span className="text-textPrimary">AI/ML and Backend Engineering</span>.
+                I'm <span className="text-textPrimary font-medium">Gayam Sainath Reddy</span> — an AI/ML Engineer and Python Backend Developer from Tamil Nadu,
+                specialising in building and deploying production-grade AI systems that solve real-world problems.
               </p>
               <p>
-                I build intelligent systems — from <span className="text-primary">RAG pipelines</span> and{' '}
-                <span className="text-primary">LLM agents</span> to REST APIs and computer vision tools. I led an{' '}
-                <span className="text-textPrimary font-medium">MSME-funded (₹9 Lakhs)</span> healthcare teleconsultation platform as Team Lead,
-                handling everything from system architecture to backend development.
+                As <span className="text-primary font-medium">Team Lead</span> of an{' '}
+                <span className="text-textPrimary font-medium">MSME-funded (₹9 Lakhs) live healthcare platform</span>, I architected
+                and shipped a full-stack AI teleconsultation system serving real doctors and patients — from system design to deployment.
               </p>
               <p>
-                I learn by building real things, not just following tutorials.
+                Beyond the team, I've independently built a{' '}
+                <span className="text-primary">multi-tenant RAG SaaS platform</span> achieving{' '}
+                <span className="text-textPrimary font-medium">sub-400ms hybrid retrieval</span>, and a{' '}
+                <span className="text-primary">clinical decision support system</span> with{' '}
+                <span className="text-textPrimary font-medium">93% Top-1 accuracy</span> on rare disease diagnosis using LLMs.
+              </p>
+              <p>
+                My stack spans <span className="text-primary">LangChain, FAISS, Pinecone, FastAPI, Groq, and Gemini</span> — and I believe great AI engineering
+                is half great models, half great systems.
               </p>
 
               <div className="pt-4">
                 <Link to="/projects"
                   className="inline-flex items-center gap-2 text-primary hover:gap-3 transition-all font-medium text-sm"
                 >
-                  View my projects <ArrowRight size={16} />
+                  See what I've built <ArrowRight size={16} />
                 </Link>
               </div>
             </motion.div>
@@ -251,10 +287,10 @@ const Home = () => {
             {/* Stats */}
             <motion.div variants={itemVariants}>
               <div className="grid grid-cols-2 gap-4 mb-8">
-                <StatCard value="4+" label="AI/ML Projects" />
-                <StatCard value="₹9L" label="MSME Funded Work" />
-                <StatCard value="93%" label="RAG Top-1 Accuracy" />
-                <StatCard value="2+" label="Years Building AI" />
+                <StatCard value="4+" label="Production AI Systems" />
+                <StatCard value="₹9L" label="MSME Funded Platform" />
+                <StatCard value="93%" label="RAG Diagnosis Accuracy" />
+                <StatCard value="400ms" label="Sub-400ms RAG Retrieval" />
               </div>
             </motion.div>
           </div>
@@ -272,7 +308,11 @@ const Home = () => {
           animate={skillsInView ? 'show' : 'hidden'}
         >
           <motion.div variants={itemVariants}>
-            <SectionHeader tag="Tech Stack" title="What I Work With" />
+            <SectionHeader
+              tag="Tech Stack"
+              title="What I Work With"
+              subtitle="Production-tested tools across AI/ML, backend engineering, and data systems."
+            />
           </motion.div>
 
           <motion.div
@@ -304,7 +344,7 @@ const Home = () => {
 
       {/* ── FEATURED PROJECTS PREVIEW ─────────────────────────────────────────── */}
       <section className="py-14 px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto border-t border-borderColor/20">
-        <div className="flex items-end justify-between mb-12">
+        <div className="flex items-end justify-between mb-8">
           <SectionHeader tag="Projects" title="Featured Work" />
           <Link
             to="/projects"
@@ -318,15 +358,15 @@ const Home = () => {
             {
               title: 'DocuMind Enterprise',
               tag: 'Multi-tenant RAG SaaS API',
-              desc: 'Upload private PDFs and securely query them using an advanced hybrid search pipeline (Semantic + BM25).',
-              stack: ['FastAPI', 'Pinecone', 'Redis', 'Celery', 'Gemini'],
+              desc: 'Production-grade RAG SaaS with 3-stage hybrid retrieval (BM25 + Semantic + Cohere Rerank), achieving sub-400ms latency and semantic Redis caching.',
+              stack: ['FastAPI', 'Pinecone', 'Redis', 'Celery', 'Gemini', 'Cohere'],
               status: 'Completed',
             },
             {
-              title: 'RAG Clinical Decision Support',
-              tag: 'AI · Healthcare · NLP',
-              desc: 'Analyses symptom narratives and matches them to rare disease records with 93% Top-1 accuracy.',
-              stack: ['LangChain', 'FAISS', 'Groq', 'Llama-3.3-70B', 'FastAPI'],
+              title: 'Doc2U — AI Healthcare Platform',
+              tag: 'MSME Funded · ₹9 Lakhs · Team Lead',
+              desc: 'Live teleconsultation platform with AI-driven triage, 25+ REST APIs, JWT multi-role auth, and appointment management — serving real doctors and patients.',
+              stack: ['FastAPI', 'PostgreSQL', 'Next.js', 'SQLAlchemy', 'JWT'],
               status: 'Completed',
             },
           ].map((p, i) => (
