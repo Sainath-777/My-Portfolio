@@ -17,7 +17,7 @@ export const projects = [
     tag: "MSME Funded · ₹9 Lakhs · Team Lead",
     problem: "Patients in rural areas struggle to access specialist doctors. Doc2U connects patients with doctors via AI-powered triage and teleconsultation, reducing diagnostic delays.",
     techStack: ["FastAPI", "PostgreSQL", "SQLAlchemy", "JWT", "Next.js"],
-    status: "🔧 In Development",
+    status: "Completed",
     demoLink: "https://doc2you.in/",
     githubLink: "#",
     roles: ["AI Engineer", "Python Developer"],
